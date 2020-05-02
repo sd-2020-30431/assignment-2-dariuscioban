@@ -16,7 +16,9 @@ public class GroceryItemQueries {
 	private static final String findAllByUserIdStatementString = "SELECT * FROM grocery_items WHERE userid = ?";
 	private static final String findByItemIdStatementString = "SELECT * FROM grocery_items WHERE itemid = ?";
 	private static final String updateStatementString = "UPDATE grocery_items SET consumptionDate = ? WHERE itemid = ?";
+	private static final String deleteStatementString = "DELETE FROM grocery_items WHERE itemid = ?";
 	
+	//finds an item by its id
 	public static GroceryItem findById(int id) {
 		GroceryItem ret = null;
 		Connection connection = DatabaseConnection.getConnection();
@@ -48,6 +50,7 @@ public class GroceryItemQueries {
 		return ret;
 	}
 	
+	//inserts an item into the table
 	public static int insert(GroceryItem item) {
 		Connection connection = DatabaseConnection.getConnection();
 		PreparedStatement statement = null;
@@ -76,6 +79,7 @@ public class GroceryItemQueries {
 		return insertedId;
 	}
 	
+	//sets the consumption date of an item
 	public static void update(Date consumptionDate, int itemid) {
 		Connection connection = DatabaseConnection.getConnection();
 		PreparedStatement statement = null;
@@ -93,7 +97,8 @@ public class GroceryItemQueries {
 		}
 	}
 	
-	public static ArrayList<GroceryItem> findAllByUserId() {
+	//returns the list of items belonging to a certain user
+	public static ArrayList<GroceryItem> findAllByUserId(int userid) {
 		ArrayList<GroceryItem> ret = new ArrayList<GroceryItem>();
 		Connection connection = DatabaseConnection.getConnection();
 		PreparedStatement statement = null;
@@ -101,6 +106,7 @@ public class GroceryItemQueries {
 		
 		try {
 			statement = connection.prepareStatement(findAllByUserIdStatementString);
+			statement.setInt(1, userid);
 			result = statement.executeQuery();
 			while(result.next()) {
 				GroceryItem temp = new GroceryItem(result.getInt(1), result.getInt(2), result.getString(3),
@@ -116,6 +122,23 @@ public class GroceryItemQueries {
 			DatabaseConnection.close(connection);
 		}
 		return ret;
+	}
+	
+	public static void delete(int itemid) {
+		Connection connection = DatabaseConnection.getConnection();
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement(deleteStatementString);
+			statement.setInt(1, itemid);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DatabaseConnection.close(connection);
+			DatabaseConnection.close(statement);
+		}
+		
 	}
 	
 }

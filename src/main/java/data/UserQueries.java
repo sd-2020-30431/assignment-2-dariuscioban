@@ -13,7 +13,9 @@ public class UserQueries {
 			+ " VALUES (?,?,?)";
 	private static final String findByIdStatementString = "SELECT * FROM users WHERE userid = ?";
 	private static final String findByUsernameStatementString = "SELECT * FROM users WHERE username = ?";
+	private static final String updateStatementString = "UPDATE users SET goal = ? WHERE userid = ?";
 	
+	//returns the user with the given id from the database
 	public static User findById(int id) {
 		User ret = null;
 		Connection connection = DatabaseConnection.getConnection();
@@ -41,6 +43,7 @@ public class UserQueries {
 		return ret;
 	}
 	
+	//returns the user with matching username from the database
 	public static User findByUsername(String username) {
 		User ret = null;
 		Connection connection = DatabaseConnection.getConnection();
@@ -68,6 +71,7 @@ public class UserQueries {
 		return ret;
 	}
 	
+	//register the user into the database
 	public static int insert(User user) {
 		Connection connection = DatabaseConnection.getConnection();
 		PreparedStatement statement = null;
@@ -91,5 +95,23 @@ public class UserQueries {
 			DatabaseConnection.close(connection);
 		}
 		return insertedId;
+	}
+	
+	//update the user's goal
+	public static void update(int goal, int userid) {
+		Connection connection = DatabaseConnection.getConnection();
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement(updateStatementString);
+			statement.setInt(1, goal);
+			statement.setInt(2, userid);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+
+		} finally {
+			DatabaseConnection.close(connection);
+			DatabaseConnection.close(statement);
+		}
 	}
 }

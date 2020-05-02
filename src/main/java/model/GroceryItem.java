@@ -52,8 +52,8 @@ public class GroceryItem {
 		return expirationDate;
 	}
 	
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setConsumptionDate(Date consumptionDate) {
+		this.consumptionDate = consumptionDate;
 	}
 
 	public Date getConsumptionDate() {
