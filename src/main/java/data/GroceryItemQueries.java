@@ -14,41 +14,8 @@ public class GroceryItemQueries {
 	private static final String insertStatementString = "INSERT INTO grocery_items "
 			+ "(userid,name,calories,quantity,purchaseDate,expirationDate) VALUES (?,?,?,?,?,?)";
 	private static final String findAllByUserIdStatementString = "SELECT * FROM grocery_items WHERE userid = ?";
-	private static final String findByItemIdStatementString = "SELECT * FROM grocery_items WHERE itemid = ?";
 	private static final String updateStatementString = "UPDATE grocery_items SET consumptionDate = ? WHERE itemid = ?";
 	private static final String deleteStatementString = "DELETE FROM grocery_items WHERE itemid = ?";
-	
-	//finds an item by its id
-	public static GroceryItem findById(int id) {
-		GroceryItem ret = null;
-		Connection connection = DatabaseConnection.getConnection();
-		PreparedStatement statement = null;
-		ResultSet result = null;
-		
-		try {
-			statement = connection.prepareStatement(findByItemIdStatementString);
-			statement.setInt(1, id);
-			result = statement.executeQuery();
-			result.next();
-
-			int userid = result.getInt("userid");
-			String name = result.getString("name");
-			int calories = result.getInt("calories");
-			int quantity = result.getInt("quantity");
-			Date purchaseDate = result.getDate("purchaseDate");
-			Date expirationDate = result.getDate("expirationDate");
-			Date consumptionDate = result.getDate("consumptionDate");
-			ret = new GroceryItem(id, userid, name, calories, quantity, purchaseDate, expirationDate, consumptionDate);
-		} catch (SQLException e) {
-
-		} finally {
-			DatabaseConnection.close(result);
-			DatabaseConnection.close(statement);
-			DatabaseConnection.close(connection);
-		}
-		
-		return ret;
-	}
 	
 	//inserts an item into the table
 	public static int insert(GroceryItem item) {

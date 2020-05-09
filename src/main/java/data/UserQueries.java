@@ -11,37 +11,8 @@ import model.User;
 public class UserQueries {
 	private static final String insertStatementString = "INSERT INTO users (username,password,goal)"
 			+ " VALUES (?,?,?)";
-	private static final String findByIdStatementString = "SELECT * FROM users WHERE userid = ?";
 	private static final String findByUsernameStatementString = "SELECT * FROM users WHERE username = ?";
 	private static final String updateStatementString = "UPDATE users SET goal = ? WHERE userid = ?";
-	
-	//returns the user with the given id from the database
-	public static User findById(int id) {
-		User ret = null;
-		Connection connection = DatabaseConnection.getConnection();
-		PreparedStatement statement = null;
-		ResultSet result = null;
-		
-		try {
-			statement = connection.prepareStatement(findByIdStatementString);
-			statement.setInt(1, id);
-			result = statement.executeQuery();
-			result.next();
-
-			String username = result.getString("username");
-			String password = result.getString("password");
-			int goal = result.getInt("goal");
-			ret = new User(id, username, password, goal);
-		} catch (SQLException e) {
-
-		} finally {
-			DatabaseConnection.close(result);
-			DatabaseConnection.close(statement);
-			DatabaseConnection.close(connection);
-		}
-		
-		return ret;
-	}
 	
 	//returns the user with matching username from the database
 	public static User findByUsername(String username) {
@@ -108,7 +79,7 @@ public class UserQueries {
 			statement.setInt(2, userid);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-
+			
 		} finally {
 			DatabaseConnection.close(connection);
 			DatabaseConnection.close(statement);
