@@ -112,7 +112,7 @@ public class LoginWindow {
 			} else 
 			{
 				JOptionPane.showMessageDialog(frame, "Invalid format! Username should start with a letter and have no spaces. "
-						+ "Password should start with a letter contain a number and have no spaces.",
+						+ "Password should start with a letter contain a number have no spaces.",
 						"Error!", JOptionPane.ERROR_MESSAGE);	
 			}
 		}

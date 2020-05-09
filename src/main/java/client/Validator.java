@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public class Validator {
 	
-	private static final String PASSWORD_PATTERN = "^[a-zA-Z](?=.*[0-9])(?=\\S+$).{8,}$";
-	private static final String USERNAME_PATTERN = "^[a-zA-Z](?=\\S+$).{6,}$";
+	private static final String PASSWORD_PATTERN = "^[a-zA-Z](?=.*[0-9])(?=\\S+$).{4,}$";
+	private static final String USERNAME_PATTERN = "^[a-zA-Z](?=\\S+$).{4,}$";
 	private static final String NAME_PATTERN = "^[a-zA-Z].{2,}$";
 
 	public static Boolean validateLoginInfo(String username, String password) {
@@ -37,6 +37,6 @@ public class Validator {
 		} catch (Exception exception) {
 			return false;
 		}
-		return p.isBefore(e) && e.isBefore(LocalDate.now());
+		return p.isBefore(e) && p.isBefore(LocalDate.now());
 	}
 }

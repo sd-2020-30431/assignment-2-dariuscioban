@@ -1,5 +1,8 @@
 package server;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import communication.GroceryItemAddBuffer;
 import communication.GroceryItemIdBuffer;
 import communication.GroceryItemListBuffer;
@@ -39,7 +42,8 @@ public class ServerRequests {
 	}
 	
 	public void processAddItemRequest(GroceryItemAddBuffer g) {
-		gs.addItem(g.getUserid(), g.getName(), g.getCalories(), g.getQuantity(), g.getPurchaseDate(), g.getExpirationDate());
+		gs.addItem(g.getUserid(), g.getName(), g.getCalories(), g.getQuantity(), 
+				Date.valueOf(g.getPurchaseDate()).toLocalDate(), Date.valueOf(g.getExpirationDate()).toLocalDate());
 	}
 	
 	public GroceryItemListBuffer processItemListRequest(UserIdBuffer u) {

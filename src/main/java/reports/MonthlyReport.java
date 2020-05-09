@@ -25,7 +25,7 @@ public class MonthlyReport implements Report{
 			if(item.getConsumptionDate() == null && item.getExpirationDate().before(finalDate))
 				caloriesToExpire += item.getCalories();
 		}
-		String report = "If not consumed, " + caloriesToExpire + " calories will expire in the following month.";
+		String report = "If not consumed, " + caloriesToExpire + " calories will expire in the following month! Consider donating.";
 		return report;
 	}
 }

@@ -8,6 +8,8 @@ public class ClassRegister {
 	public static void registerClasses(EndPoint ep) {
 		Kryo kryo = ep.getKryo();
 		kryo.register(String.class);
+		kryo.register(java.util.ArrayList.class);
+		kryo.register(UserGoalBuffer.class);
 		kryo.register(UserIdBuffer.class);
 		kryo.register(UserLoginBuffer.class);
 		kryo.register(GroceryItemBuffer.class);

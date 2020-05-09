@@ -25,7 +25,7 @@ public class WeeklyReport implements Report{
 			if(item.getConsumptionDate() == null && item.getExpirationDate().before(finalDate))
 				caloriesToExpire += item.getCalories();
 		}
-		String report = "If not consumed, " + caloriesToExpire + " calories will expire in the following week.";
+		String report = "If not consumed, " + caloriesToExpire + " calories will expire in the following week! Consider donating.";
 		return report;
 	}
 }

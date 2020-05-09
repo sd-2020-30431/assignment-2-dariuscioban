@@ -8,16 +8,16 @@ public class GroceryItemBuffer {
 	public String name;
 	public int calories;
 	public int quantity;
-	public LocalDate purchaseDate;
-	public LocalDate expirationDate;
-	public LocalDate consumptionDate;
+	public String purchaseDate;
+	public String expirationDate;
+	public String consumptionDate;
 	
 	public GroceryItemBuffer() {
 		//empty no-arg constructor for kryonet
 	}
 	
-	public GroceryItemBuffer(int itemid, String name, int calories, int quantity, LocalDate purchaseDate,
-			LocalDate expirationDate, LocalDate consumptionDate) {
+	public GroceryItemBuffer(int itemid, String name, int calories, int quantity, String purchaseDate,
+			String expirationDate, String consumptionDate) {
 		this.itemid = itemid;
 		this.name = name;
 		this.calories = calories;
@@ -43,15 +43,15 @@ public class GroceryItemBuffer {
 		return quantity;
 	}
 
-	public LocalDate getPurchaseDate() {
+	public String getPurchaseDate() {
 		return purchaseDate;
 	}
 
-	public LocalDate getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public LocalDate getConsumptionDate() {
+	public String getConsumptionDate() {
 		return consumptionDate;
 	}
 }
