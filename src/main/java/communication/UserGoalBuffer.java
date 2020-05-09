@@ -2,8 +2,12 @@ package communication;
 
 public class UserGoalBuffer {
 	
-	private int id;
-	private int goal;
+	public int id;
+	public int goal;
+	
+	public UserGoalBuffer() {
+		//empty no-arg consructor for kryonet
+	}
 	
 	public UserGoalBuffer(int id, int goal) {
 		this.id = id;

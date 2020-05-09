@@ -20,13 +20,14 @@ public class ServerConnection {
 	
 	public ServerConnection() {
 		server = new Server();
-		server.start();
 		ClassRegister.registerClasses(server);
+		server.start();
 		try {
 			server.bind(54555, 54777);
 			addListeners();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("Connection unsuccessful.");
 		}
 	}
 	
@@ -78,4 +79,9 @@ public class ServerConnection {
 		       }
 		    });
 	}
+	
+	public static void main( String[] args ) throws Exception
+    {
+		ServerConnection sn = new ServerConnection();
+    }
 }

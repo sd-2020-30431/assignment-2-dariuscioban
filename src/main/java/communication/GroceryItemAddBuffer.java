@@ -4,12 +4,16 @@ import java.time.LocalDate;
 
 public class GroceryItemAddBuffer {
 	
-	private int userid;
-	private String name;
-	private int calories;
-	private int quantity;
-	private LocalDate purchaseDate;
-	private LocalDate expirationDate;
+	public int userid;
+	public String name;
+	public int calories;
+	public int quantity;
+	public LocalDate purchaseDate;
+	public LocalDate expirationDate;
+	
+	public GroceryItemAddBuffer() {
+		//empty no-arg constructor for kryonet
+	}
 	
 	public GroceryItemAddBuffer(int userid, String name, int calories, int quantity, LocalDate purchaseDate, LocalDate expirationDate) {
 		this.userid = userid;

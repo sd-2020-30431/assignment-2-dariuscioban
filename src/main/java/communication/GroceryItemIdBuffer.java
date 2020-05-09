@@ -2,8 +2,12 @@ package communication;
 
 public class GroceryItemIdBuffer {
 	
-	private int itemid;
-	private Boolean deleteFlag;
+	public int itemid;
+	public Boolean deleteFlag;
+	
+	public GroceryItemIdBuffer() {
+		//empty no-arg constructor for kryonet
+	}
 	
 	public GroceryItemIdBuffer(int itemid, Boolean deleteFlag) {
 		this.itemid = itemid;

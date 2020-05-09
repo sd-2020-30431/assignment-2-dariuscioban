@@ -2,11 +2,15 @@ package communication;
 
 public class UserLoginBuffer {
 	
-	private String username;
-	private String password;
+	public String username;
+	public String password;
 	//if true, register request
 	//if false, login request
-	private Boolean registerFlag;
+	public Boolean registerFlag;
+	
+	public UserLoginBuffer() {
+		//empty no-arg constructor for kryonet
+	}
 	
 	public UserLoginBuffer(String username, String password, Boolean registerFlag) {
 		this.username = username;

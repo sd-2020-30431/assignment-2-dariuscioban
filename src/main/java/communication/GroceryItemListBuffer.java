@@ -6,7 +6,11 @@ import model.GroceryItem;
 
 public class GroceryItemListBuffer {
 	
-	private ArrayList<GroceryItemBuffer> itemList;
+	public ArrayList<GroceryItemBuffer> itemList;
+	
+	public GroceryItemListBuffer() {
+		//empty no-arg constructor for kryonet
+	}
 	
 	public GroceryItemListBuffer(ArrayList<GroceryItem> itemList) {
 		this.itemList = new ArrayList<GroceryItemBuffer>();
