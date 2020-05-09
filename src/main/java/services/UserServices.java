@@ -17,7 +17,7 @@ public class UserServices {
 	//user id -- login successful
 	public int login(String username, String password) {
 		User user = UserQueries.findByUsername(username);
-		if(user.getPassword().equals(password))
+		if(user != null && user.getPassword().equals(password))
 			return user.getUserid();
 		return -1;
 	}

@@ -14,6 +14,9 @@ public class ClientConnection {
 	
 	private Client client;
 	
+	private LoginWindow loginWindow;
+	private MainWindow mainWindow;
+	
 	public ClientConnection() {
 		client = new Client();
 		ClassRegister.registerClasses(client);
@@ -33,19 +36,29 @@ public class ClientConnection {
 		          if (object instanceof UserIdBuffer) {
 		             UserIdBuffer response = (UserIdBuffer)object;
 		             System.out.println("UserIdBufferReceived.");
+		             
+		             loginWindow.loginSuccess(response.getId());
+		             System.out.println(response.getId());
 		          }
 		       }
 		    });
 	}
 	
-	public void sendMsgTest() {
-		UserLoginBuffer u = new UserLoginBuffer("test_with_server", "pass123", true);
-		client.sendTCP(u);
+	public void sendLoginRequest(String username, String password) {
+		UserLoginBuffer request = new UserLoginBuffer(username, password, false);
+		client.sendTCP(request);
 	}
 	
-	public static void main( String[] args ) throws Exception
-    {
-    	ClientConnection cn = new ClientConnection();
-    	cn.sendMsgTest();
-    }
+	public void sendRegisterRequest(String username, String password) {
+		UserLoginBuffer request = new UserLoginBuffer(username, password, true);
+		client.sendTCP(request);
+	}
+	
+	public void addLoginWindow(LoginWindow lw) {
+		loginWindow = lw;
+	}
+	
+	public void addMainWindow(MainWindow mw) {
+		mainWindow = mw;
+	}
 }
