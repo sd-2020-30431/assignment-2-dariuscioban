@@ -2,29 +2,26 @@ package communication;
 
 import java.time.LocalDate;
 
-public class GroceryItemResponse {
+public class GroceryItemAddBuffer {
 	
-	private int itemid;
+	private int userid;
 	private String name;
 	private int calories;
 	private int quantity;
 	private LocalDate purchaseDate;
 	private LocalDate expirationDate;
-	private LocalDate consumptionDate;
 	
-	public GroceryItemResponse(int itemid, String name, int calories, int quantity, LocalDate purchaseDate,
-			LocalDate expirationDate, LocalDate consumptionDate) {
-		this.itemid = itemid;
+	public GroceryItemAddBuffer(int userid, String name, int calories, int quantity, LocalDate purchaseDate, LocalDate expirationDate) {
+		this.userid = userid;
 		this.name = name;
 		this.calories = calories;
 		this.quantity = quantity;
 		this.purchaseDate = purchaseDate;
 		this.expirationDate = expirationDate;
-		this.consumptionDate = consumptionDate;
 	}
 
-	public int getItemid() {
-		return itemid;
+	public int getUserid() {
+		return userid;
 	}
 
 	public String getName() {
@@ -46,8 +43,6 @@ public class GroceryItemResponse {
 	public LocalDate getExpirationDate() {
 		return expirationDate;
 	}
-
-	public LocalDate getConsumptionDate() {
-		return consumptionDate;
-	}
+	
+	
 }

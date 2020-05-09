@@ -1,6 +1,6 @@
 package communication;
 
-public class UserRequest {
+public class UserLoginBuffer {
 	
 	private String username;
 	private String password;
@@ -8,7 +8,7 @@ public class UserRequest {
 	//if false, login request
 	private Boolean registerFlag;
 	
-	public UserRequest(String username, String password, Boolean registerFlag) {
+	public UserLoginBuffer(String username, String password, Boolean registerFlag) {
 		this.username = username;
 		this.password = password;
 		this.registerFlag = registerFlag;

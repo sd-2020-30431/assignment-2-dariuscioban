@@ -1,10 +1,10 @@
 package communication;
 
-public class UserResponse {
+public class UserIdBuffer {
 	
 	int id;
 	
-	public UserResponse(int id) {
+	public UserIdBuffer(int id) {
 		this.id = id;
 	}
 	
