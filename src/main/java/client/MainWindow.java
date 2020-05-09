@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,7 +24,7 @@ import factory.AbstractFactory;
 import factory.FactoryProvider;
 import reports.ReportType;
 
-public class MainWindow {
+public class MainWindow implements Observer{
 	
 	private JFrame frame;
 	JPanel tablePanel = new JPanel();
@@ -43,12 +45,17 @@ public class MainWindow {
 	private ClientConnection cn;
 	private ArrayList<GroceryItemBuffer> itemList;
 	
+	private Boolean firstAction;
+	
 	public MainWindow(int userId, ClientConnection cn) {
 		this.userId = userId;
 		this.cn = cn;
+		itemList = new ArrayList<GroceryItemBuffer>();
 		cn.addMainWindow(this);
 		updateItemListRequest();
 		initUI();
+		updateItemListRequest();
+		firstAction = true;
 	}
 	
 	private void initUI() {
@@ -89,6 +96,10 @@ public class MainWindow {
 		eDateMField.setMaximumSize(new Dimension(50,30));
 		eDateDField.setMaximumSize(new Dimension(50,30));
 		numberField.setMaximumSize(new Dimension(50,30));
+		
+		JTable table = createTable();
+		tablePanel.add(table.getTableHeader(), BorderLayout.PAGE_START);
+		tablePanel.add(table, BorderLayout.CENTER);
 		
 		JButton refreshBtn = new JButton("Refresh");
 		refreshBtn.addActionListener(new Clicker("refresh"));
@@ -174,6 +185,10 @@ public class MainWindow {
 			this.action = action;
 		}
 		public void actionPerformed(ActionEvent arg0) {
+			if(firstAction) {
+				createDonationNotify();
+				firstAction = false;
+			}
 			if(action.equals("refresh")) {
 				try {
 					updateItemListRequest();
@@ -237,15 +252,17 @@ public class MainWindow {
 			}
 			if(action.equals("burn")) {
 				updateItemListRequest();
-				AbstractFactory f = FactoryProvider.getFactory(ReportType.WEEKLY);
-				String msg = f.createReport(userId).printReport();
-				JOptionPane.showMessageDialog(frame, msg,
-						"Burndown", JOptionPane.INFORMATION_MESSAGE);
+				String msg = getReportMsg();
+				JOptionPane.showMessageDialog(frame, msg, "Burndown", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
 	
-	
+	private String getReportMsg() {
+		AbstractFactory f = FactoryProvider.getFactory(ReportType.WEEKLY);
+		String msg = f.createReport(userId).printReport();
+		return msg;
+	}
 	
 	private JTable createTable() {
 		JTable ret;
@@ -277,9 +294,15 @@ public class MainWindow {
 		itemList = list;
 	}
 	
-	private int getItemIdOfNumber(int listNumber) {
-		if(listNumber >= itemList.size())
-			return -1;
-		return itemList.get(listNumber).getItemid();
+	private void createDonationNotify() {
+		DonationNotify dn = new DonationNotify(this, itemList);
+	}
+
+	public void update(Observable o, Object arg) {
+		String msg = (String) arg;
+		JOptionPane.showMessageDialog(frame, msg,
+				"Warning", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println("Received notification from observable.");
+		
 	}
 }

@@ -1,5 +1,6 @@
 package factory;
 
+import client.MainWindow;
 import reports.Report;
 
 public abstract class AbstractFactory {

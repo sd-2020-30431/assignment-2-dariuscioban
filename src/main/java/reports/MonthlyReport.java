@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import client.MainWindow;
 import data.GroceryItemQueries;
 import model.GroceryItem;
 
