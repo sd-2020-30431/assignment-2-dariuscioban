@@ -128,8 +128,4 @@ public class LoginWindow {
 			frame.setVisible(false);
 		}
 	}
-	
-	public static void main( String[] args ) {
-		LoginWindow lw = new LoginWindow();
-	}
 }

@@ -79,9 +79,4 @@ public class ServerConnection {
 		       }
 		    });
 	}
-	
-	public static void main( String[] args ) throws Exception
-    {
-		ServerConnection sn = new ServerConnection();
-    }
 }
