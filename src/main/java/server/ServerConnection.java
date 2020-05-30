@@ -6,13 +6,18 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import commands.AddItemRequest;
+import commands.ConsumeItemRequest;
+import commands.DeleteItemRequest;
+import commands.RegisterRequest;
+import commands.RegisterResponse;
+import commands.UpdateGoalRequest;
 import communication.ClassRegister;
-import communication.GroceryItemAddBuffer;
-import communication.GroceryItemIdBuffer;
-import communication.GroceryItemListBuffer;
-import communication.UserGoalBuffer;
-import communication.UserIdBuffer;
-import communication.UserLoginBuffer;
+
+import queries.ItemListRequest;
+import queries.ItemListResponse;
+import queries.LoginRequest;
+import queries.LoginResponse;
 
 public class ServerConnection {
 	
@@ -34,46 +39,60 @@ public class ServerConnection {
 	private void addListeners() {
 		server.addListener(new Listener() {
 		       public void received (Connection connection, Object object) {
-		          if (object instanceof UserLoginBuffer) {
-		        	  UserLoginBuffer request = (UserLoginBuffer)object;
+		    	  Mediator med = new Mediator();
+		          if (object instanceof RegisterRequest) {
+		        	  RegisterRequest request = (RegisterRequest)object;
 		        	  System.out.println("UserLoginBuffer received.");
 		        	  
-		        	  UserIdBuffer response = ServerRequests.instance.processUserRequest(request);
+		        	  RegisterResponse response = med.getHandler(request).handle(request);
 		        	  connection.sendTCP(response);
 		          }
 		          
-		          if (object instanceof UserIdBuffer) {
-		        	  UserIdBuffer request = (UserIdBuffer)object;
-		        	  System.out.println("UserIdBuffer received.");
+		          if (object instanceof LoginRequest) {
+		        	  LoginRequest request = (LoginRequest)object;
+		        	  System.out.println("UserLoginBuffer received.");
 		        	  
-		        	  ServerRequests.instance.processAutomaticDeletetionRequest(request);
-		        	  GroceryItemListBuffer response = ServerRequests.instance.processItemListRequest(request);
+		        	  LoginResponse response = med.getHandler(request).handle(request);
 		        	  connection.sendTCP(response);
 		          }
 		          
-		          if(object instanceof UserGoalBuffer) {
-		        	  UserGoalBuffer request = (UserGoalBuffer)object;
+		          if (object instanceof ItemListRequest) {
+		        	  ItemListRequest request = (ItemListRequest)object;
+		        	  System.out.println("UserIdBuffer received.");
+		        	 
+		        	  ItemListResponse response = med.getHandler(request).handle(request);
+		        	  connection.sendTCP(response);
+		          }
+		          
+		          if(object instanceof UpdateGoalRequest) {
+		        	  UpdateGoalRequest request = (UpdateGoalRequest)object;
 		        	  System.out.println("UserGoalBuffer received.");
 		        	  
-		        	  ServerRequests.instance.processUpdateGoalRequest(request);
+		        	  med.getHandler(request).handle(request);
 		        	  //no response
 		          }
 		          
-		          if(object instanceof GroceryItemIdBuffer) {
-		        	  GroceryItemIdBuffer request = (GroceryItemIdBuffer)object;
+		          if(object instanceof ConsumeItemRequest) {
+		        	  ConsumeItemRequest request = (ConsumeItemRequest)object;
 		        	  System.out.println("GroceryItemIdBuffer received.");
 		        	  
-		        	  //only one will happen based on the flag
-		        	  ServerRequests.instance.processItemDeletionRequest(request);
-		        	  ServerRequests.instance.processConsumeItemRequest(request);
+		        	  med.getHandler(request).handle(request);
 		        	  //no response
 		          }
 		          
-		          if(object instanceof GroceryItemAddBuffer) {
-		        	  GroceryItemAddBuffer request = (GroceryItemAddBuffer)object;
+		          if(object instanceof DeleteItemRequest) {
+		        	  DeleteItemRequest request = (DeleteItemRequest)object;
+		        	  System.out.println("GroceryItemIdBuffer received.");
+		        	  
+		        	  med.getHandler(request).handle(request);
+		        	  //no response
+		          }
+		          
+		          if(object instanceof AddItemRequest) {
+		        	  AddItemRequest request = (AddItemRequest)object;
 		        	  System.out.println("GroceryIteAddBuffer received.");
 		        	  
-		        	  ServerRequests.instance.processAddItemRequest(request);
+		        	  med.getHandler(request).handle(request);
 		        	  //no response
 		          }
 		       }
